@@ -16,8 +16,8 @@ export default class Welcome extends React.Component{
     }
     
     async componentDidMount(){
-        const coursesPromise= await fetch('https://api.airtable.com/v0/appMfcy98yxGtYwDO/Courses?api_key='+API_KEY);
-        const eventsPromise = await fetch('https://api.airtable.com/v0/appMfcy98yxGtYwDO/Events?api_key='+API_KEY);
+        const coursesPromise= await fetch('https://api.airtable.com/v0/appG1EnlhIeoSYkPG/Courses?api_key='+API_KEY);
+        const eventsPromise = await fetch('https://api.airtable.com/v0/appG1EnlhIeoSYkPG/Events?api_key='+API_KEY);
 
         const courses = await coursesPromise.json();
         const events = await eventsPromise.json();
