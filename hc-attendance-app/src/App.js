@@ -1,3 +1,11 @@
+/*
+App.js for HackCville, Inc
+By Camille Cooper and Mitch Gillin
+January 2020
+
+handles the routes and central organization of the checkin app for courses and events
+*/
+
 import React from "react";
 import ReactDOM from "react-dom";
 import Welcome from "./Welcome/Welcome.js"

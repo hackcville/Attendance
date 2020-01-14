@@ -39,7 +39,7 @@ export default class SignIn extends React.Component {
   handleSubmit = () => {
     let recordArray = [];
     if (this.state.number.length === 10) {
-      this.base("Fall 2019 Involvement")
+      this.base("Spring 2020 Students")
         .select({
           filterByFormula: `{CleanNumber} = "${this.state.number.join("")}"`
         })

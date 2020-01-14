@@ -1,3 +1,13 @@
+/*
+Welcome.js for HackCville, Inc
+By Camille Cooper and Mitch Gillin
+January 2020
+
+grabs from Airtable base "HackCville Spring 2020 Course Participants" the courses meeting and events happening on the
+given day. It then offers these plus studying and checkins as options for students to sign in. Attendence is tracked
+in Airtable.
+*/
+
 import React from "react";
 import {Link} from "react-router-dom"
 import "../App.css";
@@ -50,8 +60,8 @@ export default class Welcome extends React.Component{
                 })}
                 {this.state.events.map((item)=>{
                     return( 
-                        <Link key={item.id} className="classLink" to={{pathname: "/" + item.fields["Course Title"],state: item}}>
-                            {item.fields["Course Title"]}
+                        <Link key={item.id} className="classLink" to={{pathname: "/" + item.fields["Marketing Name"],state: item}}>
+                            {item.fields["Marketing Name"]}
                         </Link>)
                 })}
                 <Link key={666} className="classLink" to="/studying-sign-in">
