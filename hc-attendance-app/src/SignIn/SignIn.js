@@ -57,12 +57,40 @@ export default class SignIn extends React.Component {
       this.setState({
         ...this.state,
         record: studentRecord[0]
-      });
+      })
+      this.markAttended()
+      ;
     }
   };
 
+  markAttended = () => {
+    if (this.props.match.params.courseName != "studying") {const weekNum = this.getWeekNumber}
+    if (this.state.record){
+    this.base('Spring 2020 Students').update([
+      {
+        "id": this.state.record.id,
+        "fields": {
+          weekNum: "Attended"
+        }
+      }
+    ], function(err, records) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
+  }}
+
+  getWeekNumber = () => {
+    const startDate = new Date(Data.UTC(2020, 0, 26))
+    const today = Date.now()
+    let weeksBetween = floor((startDate - today)/604800000) //604,800,000 is the number of milliseconds per week
+    return weeksBetween
+  }
+
+
   componentDidMount() {
-    this.base = new Airtable({ apiKey: API_KEY }).base("appMfcy98yxGtYwDO");
+    this.base = new Airtable({ apiKey: API_KEY }).base("appG1EnlhIeoSYkPG");
   }
 
   render() {

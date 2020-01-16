@@ -67,8 +67,8 @@ export default class Welcome extends React.Component{
                 <Link key={666} className="classLink" to="/studying-sign-in">
                     Studying
                 </Link>
-                <Link key={999} className="classLink" to="/check-ins">
-                    Check-Ins
+                <Link key={999} className="classLink" to="/lab">
+                    Lab
                 </Link>
             </div>
         </div>)}
