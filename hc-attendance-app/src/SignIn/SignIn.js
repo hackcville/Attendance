@@ -60,37 +60,12 @@ export default class SignIn extends React.Component {
         ...this.state,
         record: studentRecord[0]
       })
-      this.markAttended()
       ;
     }
   };
 
-  markAttended = () => {
-    if (this.state.record){
-    const week = "W" + this.state.weekNum
-    this.base('Spring 2020 Students').update([{"id" : this.state.record.id,
-      "fields": {
-          [week] : "Attended"
-      }}]
-    , (err, records) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-    });
-  }}
-
-  getWeekNumber = () => {
-    const startDate = Date.UTC(2020, 0, 26)
-    const today = Date.now()
-    let weeksBetween = Math.floor((today - startDate)/604800000) //604,800,000 is the number of milliseconds per week
-    return weeksBetween + 1
-  }
-
-
   componentDidMount() {
     this.base = new Airtable({ apiKey: API_KEY }).base("appG1EnlhIeoSYkPG");
-    this.setState({weekNum: this.getWeekNumber()})
   }
 
   render() {
@@ -111,7 +86,7 @@ export default class SignIn extends React.Component {
           >
             X
           </button>
-          <button
+          <Link to="/course-selection"
             className="dialButton"
             style={{ backgroundColor: "green" }}
             onClick={() => {
@@ -119,7 +94,7 @@ export default class SignIn extends React.Component {
             }}
           >
             Submit
-          </button>
+          </Link>
         </div>
         <h2 className="numberField"> {displayNumber}</h2>
         <div className="dialButtons">

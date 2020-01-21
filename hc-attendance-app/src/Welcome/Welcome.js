@@ -52,28 +52,8 @@ export default class Welcome extends React.Component{
             <h1>Welcome to HackCville!</h1>
             <h1>Check in as</h1>
             <div className="linkContainer">
-                <Link className="classLink">Member</Link>
+                <Link className="classLink" to="/sign-in">Member</Link>
                 <a className="classLink" href="https://airtable.com/shrp2LKBFAjCsYJjv">Guest</a>
-            </div>
-            <div className="linkContainer">
-                {this.state.courses.map((item)=>{
-                    return (
-                    <Link key={item.id} className="classLink" to={{pathname: "/" + item.fields["Course Title"], state: item}}>
-                        {item.fields["Course Title"]}
-                    </Link>)
-                })}
-                {this.state.events.map((item)=>{
-                    return( 
-                        <Link key={item.id} className="classLink" to={{pathname: "/" + item.fields["Marketing Name"],state: item}}>
-                            {item.fields["Marketing Name"]}
-                        </Link>)
-                })}
-                <Link key={666} className="classLink" to="/studying-sign-in">
-                    Studying
-                </Link>
-                <Link key={999} className="classLink" to="/lab">
-                    Lab
-                </Link>
             </div>
         </div>)}
 }

@@ -11,6 +11,7 @@ import ReactDOM from "react-dom";
 import Welcome from "./Welcome/Welcome.js"
 import SignIn from "./SignIn/SignIn.js"
 import Studying from "./Studying/Studying.js"
+import Activity from "./Activity/Activity.js"
 
 import {
   BrowserRouter as Router,
@@ -26,6 +27,8 @@ export default function App() {
         <Switch>
           <Route path="/studying-sign-in" component={Studying}/> 
           <Route path="/:courseName" component={SignIn} />
+          <Route path="/sign-in" component={SignIn}/>
+          <Route path="/activity-selection" component={Activity}/>
           <Route path="/">
             <Welcome />
           </Route>
@@ -34,3 +37,5 @@ export default function App() {
     </Router>
   );
 }
+
+//get rid of studying eventually
