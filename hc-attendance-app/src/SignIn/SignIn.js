@@ -5,12 +5,14 @@ import "../App.css";
 
 const API_KEY = process.env.REACT_APP_AIRTABLE_API_KEY; // airtable api key from .env file
 let studentRecord = [];
+
 export default class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       number: [],
-      record: {}
+      record: {},
+      weekNum: undefined
     };
     this.handleSubmit.bind(this);
   }
@@ -64,16 +66,13 @@ export default class SignIn extends React.Component {
   };
 
   markAttended = () => {
-    if (this.props.match.params.courseName != "studying") {const weekNum = this.getWeekNumber}
     if (this.state.record){
-    this.base('Spring 2020 Students').update([
-      {
-        "id": this.state.record.id,
-        "fields": {
-          weekNum: "Attended"
-        }
-      }
-    ], function(err, records) {
+    const week = "W" + this.state.weekNum
+    this.base('Spring 2020 Students').update([{"id" : this.state.record.id,
+      "fields": {
+          [week] : "Attended"
+      }}]
+    , (err, records) => {
       if (err) {
         console.error(err);
         return;
@@ -82,15 +81,16 @@ export default class SignIn extends React.Component {
   }}
 
   getWeekNumber = () => {
-    const startDate = new Date(Data.UTC(2020, 0, 26))
+    const startDate = Date.UTC(2020, 0, 26)
     const today = Date.now()
-    let weeksBetween = floor((startDate - today)/604800000) //604,800,000 is the number of milliseconds per week
-    return weeksBetween
+    let weeksBetween = Math.floor((today - startDate)/604800000) //604,800,000 is the number of milliseconds per week
+    return weeksBetween + 1
   }
 
 
   componentDidMount() {
     this.base = new Airtable({ apiKey: API_KEY }).base("appG1EnlhIeoSYkPG");
+    this.setState({weekNum: this.getWeekNumber()})
   }
 
   render() {

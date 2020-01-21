@@ -50,7 +50,11 @@ export default class Welcome extends React.Component{
         return(
         <div className="center">
             <h1>Welcome to HackCville!</h1>
-            <h1>What brings you in today?</h1>
+            <h1>Check in as</h1>
+            <div className="linkContainer">
+                <Link className="classLink">Member</Link>
+                <a className="classLink" href="https://airtable.com/shrp2LKBFAjCsYJjv">Guest</a>
+            </div>
             <div className="linkContainer">
                 {this.state.courses.map((item)=>{
                     return (
