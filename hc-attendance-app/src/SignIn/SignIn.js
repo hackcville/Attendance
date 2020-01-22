@@ -56,7 +56,7 @@ export default class SignIn extends React.Component {
             pathname: "/" + this.state.record,
             state: {
               name: studentRecord[0].fields["First Name"],
-              section: studentRecord[0].fields["Course"],
+              section: studentRecord[0].fields["Meeting Day"],
               study: studentRecord[0].fields["Studying"]
             }
           });

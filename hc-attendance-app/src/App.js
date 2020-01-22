@@ -10,7 +10,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Welcome from "./Welcome/Welcome.js";
 import SignIn from "./SignIn/SignIn.js";
-import Studying from "./Studying/Studying.js";
 import Activity from "./Activity/Activity.js";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";

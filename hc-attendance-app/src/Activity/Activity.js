@@ -21,8 +21,7 @@ export default class Activity extends React.Component {
     this.state = {
       weekNum: undefined,
       courses: [],
-      events: [],
-      weekAdjustment: undefined
+      events: []
     };
   }
 
@@ -44,20 +43,11 @@ export default class Activity extends React.Component {
         }
       }
     );
+    this.props.history.push("/");
   };
 
   getWeekNumber = () => {
-    this.base("Courses").find(
-      this.props.location.state.section[0],
-      (err, record) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        this.setState({ ...this.state, weekAdjustment: record.fields["Day"] });
-      }
-    );
-    var adjustedFirstDay = 26 + this.state.weekAdjustment;
+    var adjustedFirstDay = 20 + this.props.location.state.section[0];
     const startDate = Date.UTC(2020, 0, adjustedFirstDay);
     const today = Date.now();
     let weeksBetween = Math.floor((today - startDate) / 604800000); //604,800,000 is the number of milliseconds per week
@@ -81,6 +71,7 @@ export default class Activity extends React.Component {
         }
       }
     );
+    this.props.history.push("/");
   };
 
   async componentDidMount() {
