@@ -1,3 +1,14 @@
+/*
+SignIn.js for HackCville, Inc
+By Camille Cooper and Mitch Gillin
+January 2020
+
+
+Initial page for check in app. Allows visiters to HackCville to sign in as a guest or as a member. If the visiter is not
+a member, the page is redirected to an online form through Airtable that will collect their info. If the visiter is a
+member, the page redirects to log them in.
+*/
+
 import React from "react";
 import { Link } from "react-router-dom";
 import Airtable from "airtable";
@@ -5,6 +16,7 @@ import "../App.css";
 
 const API_KEY = process.env.REACT_APP_AIRTABLE_API_KEY; // airtable api key from .env file
 let studentRecord = [];
+
 export default class SignIn extends React.Component {
   constructor(props) {
     super(props);
@@ -39,39 +51,45 @@ export default class SignIn extends React.Component {
   handleSubmit = () => {
     let recordArray = [];
     if (this.state.number.length === 10) {
-      this.base("Fall 2019 Involvement")
+      this.base("Spring 2020 Students")
         .select({
           filterByFormula: `{CleanNumber} = "${this.state.number.join("")}"`
         })
-        .eachPage(
-          function page(records, fetchNextPage) {
-            records.forEach(function(record) {
-              studentRecord.push(record);
-            });
-          },
-          function done(error) {
-            console.log(error);
-            console.log("Done");
-          }
-        );
-      this.setState({
-        ...this.state,
-        record: studentRecord[0]
-      });
+        .eachPage((records, fetchNextPage) => {
+          records.forEach(record => {
+            studentRecord.push(record);
+          });
+          fetchNextPage();
+        })
+        .then(() => {
+          this.setState({ ...this.state, record: studentRecord[0].id });
+          this.props.history.push({
+            pathname: "/" + this.state.record,
+            state: {
+              name: studentRecord[0].fields["First Name"],
+              section: studentRecord[0].fields["Meeting Day"],
+              study: studentRecord[0].fields["Studying"]
+            }
+          });
+        });
+      function done(error) {
+        console.log(error);
+        console.log("Done");
+      }
     }
   };
 
   componentDidMount() {
-    this.base = new Airtable({ apiKey: API_KEY }).base("appMfcy98yxGtYwDO");
+    this.base = new Airtable({ apiKey: API_KEY }).base("appG1EnlhIeoSYkPG");
   }
 
   render() {
     const displayNumber = this.state.number.join("");
     return (
       <div className="center">
-        <h1>Sign in to {this.props.match.params.courseName}</h1>
+        <h1>Please enter your phone number to sign in.</h1>
         <Link className="returnLink" to="/">
-          Return to Selection Page
+          Not a member?
         </Link>
         <div>
           <button
