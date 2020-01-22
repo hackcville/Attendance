@@ -3,9 +3,9 @@ Welcome.js for HackCville, Inc
 By Camille Cooper and Mitch Gillin
 January 2020
 
-grabs from Airtable base "HackCville Spring 2020 Course Participants" the courses meeting and events happening on the
-given day. It then offers these plus studying and checkins as options for students to sign in. Attendence is tracked
-in Airtable.
+Initial page for check in app. Allows visiters to HackCville to sign in as a guest or as a member. If the visiter is not
+a member, the page is redirected to an online form through Airtable that will collect their info. If the visiter is a
+member, the page redirects to log them in.
 */
 
 import React from "react";

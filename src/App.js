@@ -7,12 +7,11 @@ handles the routes and central organization of the checkin app for courses and e
 */
 
 import React from "react";
-import ReactDOM from "react-dom";
 import Welcome from "./Welcome/Welcome.js";
 import SignIn from "./SignIn/SignIn.js";
 import Activity from "./Activity/Activity.js";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 export default function App() {
   return (
@@ -29,5 +28,3 @@ export default function App() {
     </Router>
   );
 }
-
-//get rid of studying eventually

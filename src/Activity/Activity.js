@@ -104,7 +104,7 @@ export default class Activity extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="center">
         <h1>Welcome back, {this.props.location.state.name}!</h1>
         <h1>What brings you here today?</h1>
         <div className="linkContainer">
