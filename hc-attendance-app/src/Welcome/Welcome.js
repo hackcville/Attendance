@@ -9,51 +9,28 @@ in Airtable.
 */
 
 import React from "react";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import "../App.css";
-import "./Welcome.css"
+import "./Welcome.css";
 
-const API_KEY = process.env.REACT_APP_AIRTABLE_API_KEY;
-const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-export default class Welcome extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            courses: [],
-            events: []
-        }
-    }
-    
-    async componentDidMount(){
-        const coursesPromise= await fetch('https://api.airtable.com/v0/appG1EnlhIeoSYkPG/Courses?api_key='+API_KEY);
-        const eventsPromise = await fetch('https://api.airtable.com/v0/appG1EnlhIeoSYkPG/Events?api_key='+API_KEY);
-
-        const courses = await coursesPromise.json();
-        const events = await eventsPromise.json();
-
-        const today = new Date();
-        const todayNumber = today.getDay();
-        const todayFullDate = today.toISOString().split("T")[0];
-
-        console.log(events);
-
-        this.setState({
-            ...this.state,
-            courses:  await courses.records.filter((course)=> course.fields["Meeting Day"] === days[todayNumber]),
-            events:  await events.records.filter((event)=> event.fields.Date === todayFullDate)
-        })
-    }
-
-    render(){
-        
-        return(
-        <div className="center">
-            <h1>Welcome to HackCville!</h1>
-            <h1>Check in as</h1>
-            <div className="linkContainer">
-                <Link className="classLink" to="/sign-in">Member</Link>
-                <a className="classLink" href="https://airtable.com/shrp2LKBFAjCsYJjv">Guest</a>
-            </div>
-        </div>)}
+export default class Welcome extends React.Component {
+  render() {
+    return (
+      <div className="center">
+        <h1>Welcome to HackCville!</h1>
+        <h1>Check in as</h1>
+        <div className="linkContainer">
+          <Link className="classLink" to="/sign-in">
+            Member
+          </Link>
+          <a
+            className="classLink"
+            href="https://airtable.com/shrp2LKBFAjCsYJjv"
+          >
+            Guest
+          </a>
+        </div>
+      </div>
+    );
+  }
 }

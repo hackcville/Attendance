@@ -4,67 +4,163 @@ import Airtable from "airtable";
 import "../App.css";
 
 const API_KEY = process.env.REACT_APP_AIRTABLE_API_KEY; // airtable api key from .env file
-let studentRecord = [];
+
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+];
 
 export default class Activity extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      number: [],
-      record: {},
-      weekNum: undefined
+      weekNum: undefined,
+      courses: [],
+      events: [],
+      weekAdjustment: undefined
     };
-    this.handleSubmit.bind(this);
   }
 
-markAttended = () => {
-    if (this.state.record){
-    const week = "W" + this.state.weekNum
-    this.base('Spring 2020 Students').update([{"id" : this.state.record.id,
-      "fields": {
-          [week] : "Attended"
-      }}]
-    , (err, records) => {
-      if (err) {
-        console.error(err);
-        return;
+  markAttended = activity => {
+    const week = activity + this.state.weekNum;
+    this.base("Spring 2020 Students").update(
+      [
+        {
+          id: this.props.match.params.recordNumber,
+          fields: {
+            [week]: "Attended"
+          }
+        }
+      ],
+      (err, records) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
       }
-    });
-  }};
-
-getWeekNumber = () => {
-    const startDate = Date.UTC(2020, 0, 26)
-    const today = Date.now()
-    let weeksBetween = Math.floor((today - startDate)/604800000) //604,800,000 is the number of milliseconds per week
-    return weeksBetween + 1
+    );
   };
 
-componentDidMount() {
+  getWeekNumber = () => {
+    this.base("Courses").find(
+      this.props.location.state.section[0],
+      (err, record) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        this.setState({ ...this.state, weekAdjustment: record.fields["Day"] });
+      }
+    );
+    var adjustedFirstDay = 26 + this.state.weekAdjustment;
+    const startDate = Date.UTC(2020, 0, adjustedFirstDay);
+    const today = Date.now();
+    let weeksBetween = Math.floor((today - startDate) / 604800000); //604,800,000 is the number of milliseconds per week
+    return weeksBetween + 1;
+  };
+
+  studied = () => {
+    this.base("Spring 2020 Students").update(
+      [
+        {
+          id: this.props.match.params.recordNumber,
+          fields: {
+            Studying: this.props.location.state.study + 1
+          }
+        }
+      ],
+      (err, records) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+      }
+    );
+  };
+
+  async componentDidMount() {
     this.base = new Airtable({ apiKey: API_KEY }).base("appG1EnlhIeoSYkPG");
-    this.setState({weekNum: this.getWeekNumber()})
+    const coursesPromise = await fetch(
+      "https://api.airtable.com/v0/appG1EnlhIeoSYkPG/Courses?api_key=" + API_KEY
+    );
+    const eventsPromise = await fetch(
+      "https://api.airtable.com/v0/appG1EnlhIeoSYkPG/Events?api_key=" + API_KEY
+    );
+
+    const courses = await coursesPromise.json();
+    const events = await eventsPromise.json();
+
+    const today = new Date();
+    const todayNumber = today.getDay();
+    const todayFullDate = today.toISOString().split("T")[0];
+
+    this.setState({
+      ...this.state,
+      courses: await courses.records.filter(
+        course => course.fields["Meeting Day"] === days[todayNumber]
+      ),
+      events: await events.records.filter(
+        event => event.fields.Date === todayFullDate
+      ),
+      weekNum: this.getWeekNumber()
+    });
   }
 
-  render(){
-        
-    return(
-
-  <div className="linkContainer">
-                {this.state.courses.map((item)=>{
-                    return (
-                    <Link key={item.id} className="classLink" to={{pathname: "/" + item.fields["Course Title"], state: item}}>
-                        {item.fields["Course Title"]}
-                    </Link>)
-                })}
-                {this.state.events.map((item)=>{
-                    return( 
-                        <Link key={item.id} className="classLink" to={{pathname: "/" + item.fields["Marketing Name"],state: item}}>
-                            {item.fields["Marketing Name"]}
-                        </Link>)
-                })}
-                <Link key={666} className="classLink" to="/studying-sign-in">
-                    Studying
-                </Link>
-                <Link key={999} className="classLink" to="/lab">
-                    Lab
-                </Link>
-            </div>)}}
+  render() {
+    return (
+      <div>
+        <h1>Welcome back, {this.props.location.state.name}!</h1>
+        <h1>What brings you here today?</h1>
+        <div className="linkContainer">
+          {this.state.courses.map(item => {
+            return (
+              <button
+                key={item.id}
+                className="classLink"
+                onClick={() => {
+                  this.markAttended("W");
+                }}
+              >
+                {item.fields["Course Title"]}
+              </button>
+            );
+          })}
+          {this.state.events.map(item => {
+            return (
+              <button
+                key={item.id}
+                className="classLink"
+                onClick={() => {
+                  this.markAttended(item.fields["Marketing Name"]);
+                }}
+              >
+                {item.fields["Marketing Name"]}
+              </button>
+            );
+          })}
+          <button
+            className="classLink"
+            onClick={() => {
+              this.studied();
+            }}
+          >
+            Studying
+          </button>
+          <button
+            className="classLink"
+            onClick={() => {
+              this.markAttended("L");
+            }}
+          >
+            Lab
+          </button>
+        </div>
+      </div>
+    );
+  }
+}

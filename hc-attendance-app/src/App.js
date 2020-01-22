@@ -8,27 +8,20 @@ handles the routes and central organization of the checkin app for courses and e
 
 import React from "react";
 import ReactDOM from "react-dom";
-import Welcome from "./Welcome/Welcome.js"
-import SignIn from "./SignIn/SignIn.js"
-import Studying from "./Studying/Studying.js"
-import Activity from "./Activity/Activity.js"
+import Welcome from "./Welcome/Welcome.js";
+import SignIn from "./SignIn/SignIn.js";
+import Studying from "./Studying/Studying.js";
+import Activity from "./Activity/Activity.js";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export default function App() {
   return (
     <Router>
       <div className="App">
         <Switch>
-          <Route path="/studying-sign-in" component={Studying}/> 
-          <Route path="/:courseName" component={SignIn} />
-          <Route path="/sign-in" component={SignIn}/>
-          <Route path="/activity-selection" component={Activity}/>
+          <Route path="/sign-in" component={SignIn} />
+          <Route path="/:recordNumber" component={Activity} />
           <Route path="/">
             <Welcome />
           </Route>

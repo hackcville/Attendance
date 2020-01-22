@@ -10,9 +10,8 @@ export default class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      number: [],
-      record: {},
-      weekNum: undefined
+      number: [7, 5, 7, 7, 7, 7, 4, 1, 6, 9],
+      record: {}
     };
     this.handleSubmit.bind(this);
   }
@@ -45,22 +44,27 @@ export default class SignIn extends React.Component {
         .select({
           filterByFormula: `{CleanNumber} = "${this.state.number.join("")}"`
         })
-        .eachPage(
-          function page(records, fetchNextPage) {
-            records.forEach(function(record) {
-              studentRecord.push(record);
-            });
-          },
-          function done(error) {
-            console.log(error);
-            console.log("Done");
-          }
-        );
-      this.setState({
-        ...this.state,
-        record: studentRecord[0]
-      })
-      ;
+        .eachPage((records, fetchNextPage) => {
+          records.forEach(record => {
+            studentRecord.push(record);
+          });
+          fetchNextPage();
+        })
+        .then(() => {
+          this.setState({ ...this.state, record: studentRecord[0].id });
+          this.props.history.push({
+            pathname: "/" + this.state.record,
+            state: {
+              name: studentRecord[0].fields["First Name"],
+              section: studentRecord[0].fields["Course"],
+              study: studentRecord[0].fields["Studying"]
+            }
+          });
+        });
+      function done(error) {
+        console.log(error);
+        console.log("Done");
+      }
     }
   };
 
@@ -72,9 +76,9 @@ export default class SignIn extends React.Component {
     const displayNumber = this.state.number.join("");
     return (
       <div className="center">
-        <h1>Sign in to {this.props.match.params.courseName}</h1>
+        <h1>Please enter your phone number to sign in.</h1>
         <Link className="returnLink" to="/">
-          Return to Selection Page
+          Not a member?
         </Link>
         <div>
           <button
@@ -86,7 +90,7 @@ export default class SignIn extends React.Component {
           >
             X
           </button>
-          <Link to="/course-selection"
+          <button
             className="dialButton"
             style={{ backgroundColor: "green" }}
             onClick={() => {
@@ -94,7 +98,7 @@ export default class SignIn extends React.Component {
             }}
           >
             Submit
-          </Link>
+          </button>
         </div>
         <h2 className="numberField"> {displayNumber}</h2>
         <div className="dialButtons">
