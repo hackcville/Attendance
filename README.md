@@ -1,3 +1,6 @@
+#HackCville Check In App
+This app has been designed for HackCville, Inc to help keep track of visiters to the clubhouse. The app allows for both members to log their visits and attendance of courses and events, as well as collect info from new visiters who are not members.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
