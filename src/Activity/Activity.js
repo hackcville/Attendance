@@ -47,7 +47,7 @@ export default class Activity extends React.Component {
   };
 
   getWeekNumber = () => {
-    var adjustedFirstDay = 20 + this.props.location.state.section[0];
+    var adjustedFirstDay = 26 + this.props.location.state.section[0];
     const startDate = Date.UTC(2020, 0, adjustedFirstDay);
     const today = Date.now();
     let weeksBetween = Math.floor((today - startDate) / 604800000); //604,800,000 is the number of milliseconds per week
