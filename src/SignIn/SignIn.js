@@ -22,7 +22,9 @@ export default class SignIn extends React.Component {
     super(props);
     this.state = {
       number: [],
-      record: {}
+      record: {},
+      //included a state for the header to display error messages
+      textDisplay: "Please enter your phone number to sign in."
     };
     this.handleSubmit.bind(this);
   }
@@ -62,15 +64,28 @@ export default class SignIn extends React.Component {
           fetchNextPage();
         })
         .then(() => {
-          this.setState({ ...this.state, record: studentRecord[0].id });
-          this.props.history.push({
-            pathname: "/" + this.state.record,
-            state: {
-              name: studentRecord[0].fields["First Name"],
-              section: studentRecord[0].fields["Meeting Day"],
-              study: studentRecord[0].fields["Studying"]
-            }
-          });
+          if (studentRecord[0] != undefined) { //check if phone number is valid
+            this.setState({ ...this.state, record: studentRecord[0].id });
+            this.props.history.push({
+              pathname: "/" + this.state.record,
+              state: {
+                name: studentRecord[0].fields["First Name"],
+                section: studentRecord[0].fields["Meeting Day"],
+                study: studentRecord[0].fields["Studying"]
+              }
+            });
+          } else {
+            //clear phone number field
+            //display error message instructing to try again
+            this.setState({
+              ...this.state,
+              number: [],
+              record: {},
+              textDisplay: "Number not found. Please try again."
+            });
+          }
+          //clears the student record so that the same student does not get checked in again and again...
+          studentRecord = [];
         });
       function done(error) {
         console.log(error);
@@ -87,7 +102,7 @@ export default class SignIn extends React.Component {
     const displayNumber = this.state.number.join("");
     return (
       <div className="center">
-        <h1>Please enter your phone number to sign in.</h1>
+        <h1>{this.state.textDisplay}</h1>
         <Link className="returnLink" to="/">
           Not a member?
         </Link>
