@@ -1,17 +1,16 @@
 .linkContainer{
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
 
 }
 
 .classLink{
-    padding: 40px;
+    padding: 50px;
     margin: 20px;
     background-color: #1E72BE;
     color: white;
     font-size: 40px;
-    width: 30%;
+    width: 50%;
     text-align: center;
     text-decoration: none;
 }
