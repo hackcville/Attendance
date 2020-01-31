@@ -10,6 +10,7 @@ import React from "react";
 import Welcome from "./Welcome/Welcome.js";
 import SignIn from "./SignIn/SignIn.js";
 import Activity from "./Activity/Activity.js";
+import Confirmation from "./Confirmation/Confirmation.js"
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -18,6 +19,7 @@ export default function App() {
     <Router>
       <div className="App">
         <Switch>
+        <Route path="/confirmation" component={Confirmation}/>
           <Route path="/sign-in" component={SignIn} />
           <Route path="/:recordNumber" component={Activity} />
           <Route path="/">

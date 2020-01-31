@@ -43,7 +43,7 @@ export default class Activity extends React.Component {
         }
       }
     );
-    this.props.history.push("/");
+    this.goToConfirmationPage()
   };
 
   getWeekNumber = () => {
@@ -71,9 +71,14 @@ export default class Activity extends React.Component {
         }
       }
     );
-    this.props.history.push("/");
+    this.goToConfirmationPage()
   };
 
+  goToConfirmationPage = () =>{
+    this.props.history.push({
+      pathname: "/confirmation"})
+    };
+ 
   async componentDidMount() {
     this.base = new Airtable({ apiKey: API_KEY }).base("appG1EnlhIeoSYkPG");
     const coursesPromise = await fetch(
