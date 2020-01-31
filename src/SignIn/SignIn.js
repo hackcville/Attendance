@@ -21,7 +21,7 @@ export default class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      number: [4,3,4,9,9,5,9,1,3,8],
+      number: [],
       record: {},
       //included a state for the header to display error messages
       textDisplay: "Please enter your phone number to sign in."
