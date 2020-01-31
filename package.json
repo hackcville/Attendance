@@ -1,6 +1,9 @@
 {
   "name": "hc-attendance-app",
   "version": "0.1.0",
+  "engines": {
+    "node": "13.6.0"
+  },
   "private": true,
   "dependencies": {
     "airtable": "^0.7.1",
