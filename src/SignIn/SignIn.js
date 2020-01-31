@@ -64,7 +64,8 @@ export default class SignIn extends React.Component {
           fetchNextPage();
         })
         .then(() => {
-          if (studentRecord[0] != undefined) { //check if phone number is valid
+          if (studentRecord[0] != undefined) {
+            //check if phone number is valid
             this.setState({ ...this.state, record: studentRecord[0].id });
             this.props.history.push({
               pathname: "/" + this.state.record,
@@ -106,7 +107,7 @@ export default class SignIn extends React.Component {
         <Link className="returnLink" to="/">
           Not a member?
         </Link>
-        <div>
+        <div className="dialPad">
           <button
             className="dialButton"
             style={{ backgroundColor: "red" }}

@@ -43,7 +43,7 @@ export default class Activity extends React.Component {
         }
       }
     );
-    this.goToConfirmationPage()
+    this.goToConfirmationPage();
   };
 
   getWeekNumber = () => {
@@ -71,14 +71,15 @@ export default class Activity extends React.Component {
         }
       }
     );
-    this.goToConfirmationPage()
+    this.goToConfirmationPage();
   };
 
-  goToConfirmationPage = () =>{
+  goToConfirmationPage = () => {
     this.props.history.push({
-      pathname: "/confirmation"})
-    };
- 
+      pathname: "/confirmation"
+    });
+  };
+
   async componentDidMount() {
     this.base = new Airtable({ apiKey: API_KEY }).base("appG1EnlhIeoSYkPG");
     const coursesPromise = await fetch(
@@ -139,14 +140,14 @@ export default class Activity extends React.Component {
               </button>
             );
           })}
-          <button
+          {/* <button
             className="classLink"
             onClick={() => {
               this.studied();
             }}
           >
             Studying
-          </button>
+          </button> */}
           <button
             className="classLink"
             onClick={() => {
