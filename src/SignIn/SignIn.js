@@ -104,9 +104,9 @@ export default class SignIn extends React.Component {
     return (
       <div className="center">
         <h1>{this.state.textDisplay}</h1>
-        <Link className="returnLink" to="/">
+        {/* <Link className="returnLink" to="/">
           Not a member?
-        </Link>
+        </Link> */}
         <div className="dialPad">
           <button
             className="dialButton"
@@ -128,7 +128,7 @@ export default class SignIn extends React.Component {
           </button>
         </div>
         <h2 className="numberField"> {displayNumber}</h2>
-        <div className="dialButtons">
+        <div className="keypad">
           <button
             className="dialButton"
             onClick={() => {
