@@ -10,7 +10,6 @@ member, the page redirects to log them in.
 */
 
 import React from "react";
-import { Link } from "react-router-dom";
 import Airtable from "airtable";
 import "../App.css";
 
@@ -51,7 +50,6 @@ export default class SignIn extends React.Component {
   };
 
   handleSubmit = () => {
-    let recordArray = [];
     if (this.state.number.length === 10) {
       this.base("Spring 2020 Students")
         .select({
@@ -64,7 +62,7 @@ export default class SignIn extends React.Component {
           fetchNextPage();
         })
         .then(() => {
-          if (studentRecord[0] != undefined) {
+          if (studentRecord[0] !== undefined) {
             //check if phone number is valid
             this.setState({ ...this.state, record: studentRecord[0].id });
             this.props.history.push({
@@ -88,10 +86,12 @@ export default class SignIn extends React.Component {
           //clears the student record so that the same student does not get checked in again and again...
           studentRecord = [];
         });
-      function done(error) {
-        console.log(error);
-        console.log("Done");
-      }
+      (err, records) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+      };
     }
   };
 

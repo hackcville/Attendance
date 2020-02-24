@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Airtable from "airtable";
 import "../App.css";
 
