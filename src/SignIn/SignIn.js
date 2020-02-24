@@ -86,7 +86,7 @@ export default class SignIn extends React.Component {
           //clears the student record so that the same student does not get checked in again and again...
           studentRecord = [];
         });
-      (err, records) => {
+      function(err) {
         if (err) {
           console.error(err);
           return;
